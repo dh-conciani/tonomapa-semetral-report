@@ -3,10 +3,10 @@
 
 // -- * 
 // read collection of images in which areas will be computed
-var collection = ee.Image('projects/mapbiomas-workspace/public/collection8/mapbiomas_collection80_integration_v1');
+var collection = ee.Image('projects/mapbiomas-public/assets/brazil/lulc/collection9/mapbiomas_collection90_integration_v1');
 
 // define the years to bem computed 
-var years = ee.List.sequence({'start': 1985, 'end': 2022, 'step': 1}).getInfo();
+var years = ee.List.sequence({'start': 1985, 'end': 2023, 'step': 1}).getInfo();
 // *-- 
 
 // -- *
@@ -100,7 +100,7 @@ var computed = territories.map(function(image) {
 // export data
 Export.table.toDrive({
       collection: ee.FeatureCollection(computed).flatten(),
-      description: '2024-07-23-REPORT',
+      description: '2024-07-23-REPORT_v2',
       folder: driverFolder,
       fileFormat: 'CSV'
 });
