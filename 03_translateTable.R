@@ -1,4 +1,3 @@
-
 ## translate to no mapa report tables
 ## dhemerson.costa@ipam.org.br
 
@@ -10,7 +9,7 @@ library(sf)
 options(scipen=9e3)
 
 ## read table
-data <- read.csv('./table/2024-07-23-REPORT_v2.csv') %>%
+data <- read.csv('./table/2024-10-01-REPORT_v3.csv') %>%
   subset(select=-c(system.index, .geo)) %>%
   mutate(condition = case_when(
     condition == 1 ~ "Dentro",
@@ -19,12 +18,12 @@ data <- read.csv('./table/2024-07-23-REPORT_v2.csv') %>%
   ))
 
 ## read shapefile
-vector <- read_sf('./vector/23-07-2024.shp')
+vector <- read_sf('./vector/01-10-2024.shp')
+vector$id <- as.numeric(vector$id)
 
 ## join
-data <- left_join(data, vector, by= c('objectid' = 'OBJECTID')) %>%
-  as.data.frame() %>%
-  subset(select=-c(FID_TnM_co, id, ha, geometry))
+data <- left_join(data, vector, by= c('objectid' = 'id')) %>%
+  as.data.frame()
 
 ## read lcluc dictionary
 dict <- read.csv2('./dict/mapbiomas-dict-ptbr.csv', sep=';', fileEncoding = 'latin2')
@@ -34,7 +33,7 @@ data <- left_join(data, dict, by= c('class_id' = 'id'))
 
 ## export 
 write.table(x= data,
-            file= './2024-07-23-TNM-REPORT_v2.csv', 
+            file= './2024-10-01-TNM-REPORT_v3.csv', 
             fileEncoding='UTF-8',
             row.names= FALSE,
             sep='\t',
