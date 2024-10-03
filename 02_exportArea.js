@@ -23,7 +23,7 @@ var driverFolder = 'TNM-REPORT';
 
 // -- *
 // read input data
-var territories = ee.ImageCollection('users/dh-conciani/help/tonomapa-reports/2024-07-23-IC');
+var territories = ee.ImageCollection('users/dh-conciani/help/tonomapa-reports/2024-10-01-IC');
 
 // for each territory
 var computed = territories.map(function(image) {
@@ -100,7 +100,7 @@ var computed = territories.map(function(image) {
 // export data
 Export.table.toDrive({
       collection: ee.FeatureCollection(computed).flatten(),
-      description: '2024-07-23-REPORT_v2',
+      description: '2024-10-01-REPORT_v3',
       folder: driverFolder,
       fileFormat: 'CSV'
 });
