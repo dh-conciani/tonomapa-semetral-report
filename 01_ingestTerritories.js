@@ -3,7 +3,7 @@
 // dhemerson.costa@ipam.org.br
 
 // input territories data as features
-var input = ee.FeatureCollection('users/dh-conciani/help/tonomapa-reports/2024-10-01');
+var input = ee.FeatureCollection('users/dh-conciani/help/tonomapa-reports/2024-10-16');
 
 // build auxiliary as image
 var input_image = ee.Image(1).clip(input);
@@ -13,7 +13,7 @@ Map.addLayer(input_image, {}, 'territories');
 var buffer_size = 10000;
 
 // set output imageCollection
-var output = 'users/dh-conciani/help/tonomapa-reports/2024-10-01-IC';
+var output = 'users/dh-conciani/help/tonomapa-reports/2024-10-16-IC';
 
 // compute buffers
 //var buffers = input.map(function(feature) {
@@ -26,7 +26,7 @@ var output = 'users/dh-conciani/help/tonomapa-reports/2024-10-01-IC';
 var data = ee.ImageCollection(
   input.map(function(feature) {
     // get ocjectid
-    var obj = feature.get('id');
+    var obj = feature.get('ID_unico');
     // compute buffer zone
     var buffer = feature.buffer(buffer_size)
       // and retain only difference (outer space)
