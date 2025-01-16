@@ -23,7 +23,7 @@ var driverFolder = 'TNM-REPORT';
 
 // -- *
 // read input data
-var territories = ee.ImageCollection('users/dh-conciani/help/tonomapa-reports/2025-01-15-IC');
+var territories = ee.ImageCollection('users/dhconciani/2025-01-15-IC');
 
 // for each territory
 var computed = territories.map(function(image) {
