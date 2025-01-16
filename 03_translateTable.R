@@ -9,7 +9,7 @@ library(sf)
 options(scipen=9e3)
 
 ## read table
-data <- read.csv('./table/2024-10-01-REPORT_v3.csv') %>%
+data <- read.csv('./table/2025-01-15-REPORT_v5.csv') %>%
   subset(select=-c(system.index, .geo)) %>%
   mutate(condition = case_when(
     condition == 1 ~ "Dentro",
@@ -18,24 +18,25 @@ data <- read.csv('./table/2024-10-01-REPORT_v3.csv') %>%
   ))
 
 ## read shapefile
-vector <- read_sf('./vector/01-10-2024.shp')
-vector$id <- as.numeric(vector$id)
+vector <- read_sf('./vector/15-01-2025.shp')
+vector$ID_unico <- as.numeric(vector$ID_un)
 
 ## join
-data <- left_join(data, vector, by= c('objectid' = 'id')) %>%
-  as.data.frame()
+data <- left_join(data, vector, by= c('objectid' = 'ID_un')) %>%
+  as.data.frame() %>%
+  select(-c(geometry, ha))
 
 ## read lcluc dictionary
-dict <- read.csv2('./dict/mapbiomas-dict-ptbr.csv', sep=';', fileEncoding = 'latin2')
+#dict <- read.csv2('./dict/mapbiomas-dict-ptbr.csv', sep=';', fileEncoding = 'latin2')
 
 ## translate lulc
-data <- left_join(data, dict, by= c('class_id' = 'id'))
+#data <- left_join(data, dict, by= c('class_id' = 'id'))
 
 ## export 
 write.table(x= data,
-            file= './2024-10-01-TNM-REPORT_v3.csv', 
+            file= './2025-01-15-TNM-REPORT_v5.csv', 
             fileEncoding='UTF-8',
             row.names= FALSE,
             sep='\t',
-            dec=',',
+            dec='.',
             col.names= TRUE)
